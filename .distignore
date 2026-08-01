@@ -1,0 +1,11 @@
+# Files excluded from the WordPress.org distribution build (SVN trunk / zip).
+# Everything here is dev-only and must NOT ship in the plugin package
+# (Plugin Check flags hidden files + unexpected markdown otherwise).
+.git
+.github
+.gitignore
+.distignore
+.wp-env.json
+.wp-env.override.json
+PUBLISH_NOTE.md
+node_modules

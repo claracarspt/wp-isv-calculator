@@ -1,2 +1,4 @@
 # internal owner note — not for the public repo
 PUBLISH_NOTE.md
+.wp-env.json
+.wp-env.override.json

@@ -2,7 +2,7 @@
 Contributors: claracars
 Tags: portugal, car tax, isv, iuc, calculator
 Requires at least: 6.0
-Tested up to: 6.5
+Tested up to: 7.0
 Requires PHP: 7.4
 Stable tag: 1.0.0
 License: GPLv2 or later
@@ -46,6 +46,19 @@ No — they are a maintained estimate cross-checked against the official AT tabl
 
 = Can I self-host the calculator? =
 Yes. The calculator and its API are open source: https://github.com/claracarspt/calcs
+
+== External services ==
+
+This plugin embeds a calculator widget served from **claracars.pt** (operated by Clara Cars). It relies on that external service to function.
+
+* **What it does:** the plugin outputs an `<iframe>` that loads `https://claracars.pt/embed-isv`. Inside that widget, the vehicle parameters a visitor enters — engine size (cc), CO₂, fuel, registration year and condition (used/new) — are sent to the Clara Cars public API (`https://claracars.pt/api/public/isv`) to compute the tax estimate.
+* **What is sent:** only the vehicle parameters listed above. **No personal data** is collected or transmitted by the calculator.
+* **When:** when a visitor views the page containing the calculator and when they press "Calculate".
+* **Provider:** Clara Cars — https://claracars.pt
+* **Terms of service:** https://claracars.pt/en/terms
+* **Privacy policy:** https://claracars.pt/en/privacy
+
+The calculation code is open source (MIT) and can be self-hosted instead: https://github.com/claracarspt/calcs
 
 == Changelog ==
 

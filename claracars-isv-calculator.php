@@ -52,7 +52,7 @@ function claracars_isv_shortcode( $atts ) {
 	$a = shortcode_atts(
 		array(
 			'lang'   => 'pt',
-			'height' => 380,
+			'height' => 480,
 			'width'  => 360,
 		),
 		$atts,
@@ -62,6 +62,21 @@ function claracars_isv_shortcode( $atts ) {
 	return claracars_isv_iframe( $a['lang'], $a['height'], $a['width'] );
 }
 add_shortcode( 'claracars_isv', 'claracars_isv_shortcode' );
+
+/**
+ * Front-end helper that auto-fits the iframe height to the widget content
+ * (the widget posts its height via postMessage). Small, dependency-free.
+ */
+function claracars_isv_enqueue_scripts() {
+	wp_enqueue_script(
+		'claracars-isv-resize',
+		plugins_url( 'resize.js', __FILE__ ),
+		array(),
+		'1.0.0',
+		true
+	);
+}
+add_action( 'wp_enqueue_scripts', 'claracars_isv_enqueue_scripts' );
 
 /**
  * Register the block (server-rendered → reuses the same iframe output as the shortcode).
@@ -76,7 +91,7 @@ function claracars_isv_register_block() {
 			'render_callback' => function ( $attributes ) {
 				return claracars_isv_iframe(
 					isset( $attributes['lang'] ) ? $attributes['lang'] : 'pt',
-					isset( $attributes['height'] ) ? $attributes['height'] : 380,
+					isset( $attributes['height'] ) ? $attributes['height'] : 480,
 					360
 				);
 			},
