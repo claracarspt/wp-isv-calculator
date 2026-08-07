@@ -36,6 +36,9 @@ function claracars_isv_iframe( $lang, $height, $width ) {
 	$width  = max( 240, min( 1200, (int) $width ) );
 	$src    = 'https://claracars.pt/embed-isv?lang=' . rawurlencode( $lang );
 
+	// Load the resize helper only on pages that actually render the widget.
+	wp_enqueue_script( 'claracars-isv-resize' );
+
 	return sprintf(
 		'<iframe src="%s" width="%d" height="%d" style="border:0;max-width:100%%" loading="lazy" title="%s"></iframe>',
 		esc_url( $src ),
@@ -65,10 +68,11 @@ add_shortcode( 'claracars_isv', 'claracars_isv_shortcode' );
 
 /**
  * Front-end helper that auto-fits the iframe height to the widget content
- * (the widget posts its height via postMessage). Small, dependency-free.
+ * (the widget posts its height via postMessage). Registered here; enqueued
+ * only when the shortcode/block actually renders an iframe.
  */
-function claracars_isv_enqueue_scripts() {
-	wp_enqueue_script(
+function claracars_isv_register_scripts() {
+	wp_register_script(
 		'claracars-isv-resize',
 		plugins_url( 'resize.js', __FILE__ ),
 		array(),
@@ -76,7 +80,7 @@ function claracars_isv_enqueue_scripts() {
 		true
 	);
 }
-add_action( 'wp_enqueue_scripts', 'claracars_isv_enqueue_scripts' );
+add_action( 'wp_enqueue_scripts', 'claracars_isv_register_scripts' );
 
 /**
  * Register the block (server-rendered → reuses the same iframe output as the shortcode).
